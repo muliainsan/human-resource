@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:admin']);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+
+        // \dd(Auth::user()->getRedirectRoute()->first());
         $tittle = "Dashboard Admin";
-        return view('pages.employee.dashboard')->with('tittle', $tittle);
+        return view('pages.admin.dashboard')->with('tittle', $tittle);
     }
 
     /**

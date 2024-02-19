@@ -7,8 +7,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 
-class LoginController extends Controller
+class AuthenticateController extends Controller
 {
+    protected $redirectTo = '/admin';
+
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+
 
     public function login()
     {
@@ -37,5 +44,14 @@ class LoginController extends Controller
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
+    }
+
+    public function logout(): RedirectResponse
+    {
+        auth()->logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

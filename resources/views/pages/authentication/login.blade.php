@@ -76,7 +76,7 @@
                     {{-- <a href="forgot-password.html">I forgot my password</a> --}}
                 </p>
                 <p class="mb-0">
-                    <a href="register.html" class="text-center">Daftar baru</a>
+                    <a href="{{ url('register') }}" class="text-center">Daftar baru</a>
                 </p>
             </div>
             <!-- /.card-body -->

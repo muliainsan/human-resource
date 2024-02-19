@@ -12,7 +12,7 @@ class EmployeeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['role:admin']);
+        $this->middleware(['role:user']);
     }
 
 
@@ -20,10 +20,6 @@ class EmployeeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        \dd(Auth::user()->hasRole('admin'));
-
-
-        \dd(Auth::user());
         $tittle = "Dashboard Employee";
         return view('pages.employee.dashboard')->with('tittle', $tittle);
     }

@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\auth\AuthenticateController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\auth\LoginController;
+use App\Http\Controllers\auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +17,16 @@ use App\Http\Controllers\auth\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AuthenticateController::class, 'login']);
 
 
-Route::resource('user', EmployeeController::class);
-Route::resource('admin', AdminController::class);
-Route::get('login', [LoginController::class, 'login'])->name('login');
-Route::post('login', [LoginController::class, 'authenticate'])->name('login');
+Route::resource('user', EmployeeController::class)->middleware('auth');
+Route::resource('admin', AdminController::class)->middleware('auth');
+
+
+Route::get('login', [AuthenticateController::class, 'login'])->name('login');
+Route::post('login', [AuthenticateController::class, 'authenticate'])->name('login');
+Route::post('/logout', [AuthenticateController::class, 'logout'])->name('logout');
+
+Route::get('/register', [RegisterController::class, 'index']);
+Route::post('/register', [RegisterController::class, 'store'])->name('register');
