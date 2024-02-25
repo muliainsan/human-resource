@@ -64,44 +64,7 @@
             </div>
         </div>
     </div>
-    {{-- @stop --}}
-    @push('js')
-        <form action="" id="delete-form" method="post">
-            @method('delete')
-            @csrf
-        </form>
-        <script>
-            $("#example2").DataTable({
-                "responsive": true,
-                "lengthChange": true,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
-        </script>
-        <script>
-            function notificationBeforeDelete(event, el) {
-                event.preventDefault();
-                if (confirm('are you sure to delete the data ? ')) {
-                    $("#delete-form").attr('action', $(el).attr('href'));
-                    $("#delete-form").submit();
-                }
-            }
-
-
-            @if (Session::has('success_message'))
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": true
-                }
-                toastr.success("{{ session('success_message') }}");
-            @endif
-
-            @if (Session::has('error_message'))
-                toastr.options = {
-                    "closeButton": true,
-                    "progressBar": true
-                }
-                toastr.error("{{ session('error_message') }}");
-            @endif
-        </script>
-    @endpush
 @endsection
+{{-- @stop --}}
+@push('js')
+@endpush
