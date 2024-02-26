@@ -12,10 +12,10 @@
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Id</th>
-                                <th>Name</th>
+                                {{-- <th>Id</th> --}}
+                                <th>Nama</th>
                                 <th>Email</th>
-                                <th>Address</th>
+                                <th>Role</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -24,7 +24,7 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ $user->address }}</td>
+                                    <td>{{ $user->getRoleNames() }}</td>
                                     <td>
 
                                         <a href="{{ route('user.show', $user) }}" class="btn btn-primary btn-sm">

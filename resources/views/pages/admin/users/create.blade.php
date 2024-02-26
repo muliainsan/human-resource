@@ -46,7 +46,7 @@
 
         <div class="mb-3">
             <label for="role">Role </label>
-            <select id="role" class="form-control @error('role') is-invalid @enderror">
+            <select id="role" name="role" class="form-control @error('role') is-invalid @enderror">
                 @foreach ($roles as $role)
                     <option value="{{ $role->name }}" @if ($role->name == 'user') selected="selected" @endif>
                         {{ $role->name }}</option>

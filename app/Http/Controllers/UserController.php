@@ -54,12 +54,7 @@ class UserController extends Controller
 
         $user->assignRole($request->role);
         return redirect()->route('user.index')
-            ->with('success_message', 'Berhasil menambah device baru');;
-        // if (Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
-        //     $request->session()->regenerate();
-
-        //     return redirect()->intended('/');
-        // }
+            ->with('success_message', 'Berhasil menambah user baru');
     }
 
     /**
@@ -74,7 +69,16 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        if (!$user) return redirect()->route('users.index')
+            ->with('error_message', 'User dengan id' . $id . ' tidak ditemukan');
+
+        return view('pages.admin.users.edit', [
+            'user' => $user,
+            'users' => User::all(),
+            'roles' => Role::all(),
+            'tittle' => "Update Pegawai"
+        ]);
     }
 
     /**
@@ -82,7 +86,20 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->validate($request, [
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email,' . $id],
+
+        ]);
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        $user->syncRoles($request->role);
+        return redirect()->route('user.index')
+            ->with('success_message', 'User berhasil diupdate');
     }
 
     /**
@@ -90,6 +107,10 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+
+        if ($user) $user->delete();
+        return redirect()->route('user.index')
+            ->with('success_message', 'Berhasil menghapus user');
     }
 }
