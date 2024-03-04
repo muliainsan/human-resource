@@ -27,6 +27,8 @@ Route::resource('admin', AdminController::class)->middleware('auth');
 Route::resource('user', UserController::class)->middleware('auth');
 
 
+
+// AUTHENTICATION
 Route::get('login', [AuthenticateController::class, 'login'])->name('login');
 Route::post('login', [AuthenticateController::class, 'authenticate'])->name('login');
 Route::post('/logout', [AuthenticateController::class, 'logout'])->name('logout');

@@ -17,9 +17,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
+
         return view('pages.admin.users.index', [
             'users' => $users,
-            'tittle' => "Data Pegawai"
+            'tittle' => "Data Pegawai Baru"
         ]);
     }
 
@@ -89,7 +90,6 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email,' . $id],
-
         ]);
 
         $user = User::find($id);
